@@ -17,5 +17,5 @@ export const mouseRight = async (px: number) => {
 };
 
 export const mousePosition = async () => {
-  mouse.getPosition();
+  return mouse.getPosition();
 };

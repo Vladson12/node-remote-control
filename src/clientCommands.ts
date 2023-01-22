@@ -4,7 +4,7 @@ import {
   mousePosition,
   mouseRight,
   mouseUp,
-} from './handlers';
+} from './handlers/mouseHandlers';
 
 class Command {
   constructor(

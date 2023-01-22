@@ -26,12 +26,15 @@ export const handleMessage = async (message: RawData) => {
       } executes`,
     );
 
-    if (command.args === 0) {
-      await command.handler();
-    } else {
-      await command.handler(...numCommandArgs);
-    }
+    const commandResult = await command.handler(...numCommandArgs);
+
     let res = commandName;
+    if (commandResult) {
+      if (command.name === 'mouse_position') {
+        res += `_x:${commandResult.x},y:${commandResult.y}`;
+      }
+    }
+
     if (numCommandArgs.length !== 0) {
       res += '_' + numCommandArgs.join('_');
     }
