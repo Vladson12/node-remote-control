@@ -1,5 +1,6 @@
 import { WebSocketServer } from 'ws';
 import dotenv from 'dotenv';
+import { handleMessage } from './commandHandler';
 
 dotenv.config();
 
@@ -20,7 +21,13 @@ webSocketServer.on('connection', (ws, req) => {
     `Connection opened by client on ${clientIPAddress}:${clientPort}`,
   );
 
-  ws.on('message', (data) => {
+  ws.on('message', async (data) => {
     console.log('received: %s', data);
+    try {
+      const result = await handleMessage(data);
+      ws.send(result);
+    } catch (err) {
+      console.error(err);
+    }
   });
 });
