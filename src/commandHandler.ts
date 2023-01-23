@@ -1,11 +1,11 @@
 import { RawData } from 'ws';
-import { commands } from './clientCommands';
+import { commands, Command } from './clientCommands';
 
 export const handleMessage = async (message: RawData) => {
   const [commandName, ...stringCommandArgs] = message.toString().split(' ');
   const numCommandArgs = stringCommandArgs.map((stringArg) => +stringArg);
   if (!commandName) {
-    throw new Error('Command not found!');
+    throw new Error(`Command missing!`);
   }
 
   const command = commands.find((command) => command.name === commandName);
@@ -13,6 +13,7 @@ export const handleMessage = async (message: RawData) => {
   if (!command) {
     throw new Error(`Command \'${commandName}\' unsupported`);
   }
+
   if (command.args !== numCommandArgs.length) {
     throw new Error(
       `Command \'${commandName}\' must have ${command.args} arg(s)`,
@@ -28,25 +29,38 @@ export const handleMessage = async (message: RawData) => {
 
     const commandResult = await command.handler(...numCommandArgs);
 
-    let res = commandName;
-    if (commandResult) {
-      switch (command.name) {
-        case 'mouse_position':
-          res += `_x:${commandResult.x},y:${commandResult.y}`;
-          break;
-        case 'prnt_scrn':
-          res += ` ${commandResult}`;
-          break;
-        default:
-          res += ` ${commandResult}`;
-      }
-    }
+    console.log(
+      `Command ${command.name}${
+        numCommandArgs.length === 0 ? '' : ` ${numCommandArgs.join(' ')}`
+      } execution finished`,
+    );
 
-    if (numCommandArgs.length !== 0) {
-      res += '_' + numCommandArgs.join('_');
-    }
-    return res;
+    return generateResultString(command, commandResult, stringCommandArgs);
   } catch (err) {
-    throw new Error(`Something went wrong during command execution`);
+    throw err;
   }
+};
+
+const generateResultString = (
+  command: Command,
+  commandResult: any,
+  commandArgs: string[],
+) => {
+  let res = command.name;
+  if (commandArgs.length !== 0) {
+    res += '_' + commandArgs.join('_');
+  }
+  if (commandResult) {
+    switch (command.name) {
+      case 'mouse_position':
+        res += `_x:${commandResult.x!},y:${commandResult.y!}`;
+        break;
+      case 'prnt_scrn':
+        res += ` ${commandResult}`;
+        break;
+      default:
+        res += ` ${commandResult}`;
+    }
+  }
+  return res;
 };

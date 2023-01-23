@@ -8,7 +8,7 @@ import {
 } from './handlers/mouseHandlers';
 import { makeScreenshot } from './handlers/screenHandlers';
 
-class Command {
+export class Command {
   constructor(
     public name: string,
     public args: number,
