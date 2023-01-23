@@ -18,9 +18,6 @@ export const drawCircle = async (radiusPx: number) => {
     startMousePosition.y + radiusPx,
   );
 
-  console.log(startMousePosition);
-  console.log(circleCenterPosition);
-
   let angle = 0;
   const degreeStep = 1;
   let newX, newY;
