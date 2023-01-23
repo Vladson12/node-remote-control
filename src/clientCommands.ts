@@ -1,3 +1,4 @@
+import { drawCircle, drawRectangle, drawSquare } from './handlers/drawHandlers';
 import {
   mouseDown,
   mouseLeft,
@@ -20,4 +21,8 @@ export const commands: Command[] = [
   new Command('mouse_left', 1, mouseLeft),
   new Command('mouse_right', 1, mouseRight),
   new Command('mouse_position', 0, mousePosition),
+
+  new Command('draw_circle', 1, drawCircle),
+  new Command('draw_square', 1, drawSquare),
+  new Command('draw_rectangle', 2, drawRectangle),
 ];
