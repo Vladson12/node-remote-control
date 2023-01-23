@@ -1,6 +1,6 @@
 # node-crud-api
 
-Simple CRUD-API with Node.js.
+Simple node remote control with Node.js.
 
 ## Table of contents
 
