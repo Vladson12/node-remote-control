@@ -6,6 +6,7 @@ import {
   mouseRight,
   mouseUp,
 } from './handlers/mouseHandlers';
+import { makeScreenshot } from './handlers/screenHandlers';
 
 class Command {
   constructor(
@@ -25,4 +26,6 @@ export const commands: Command[] = [
   new Command('draw_circle', 1, drawCircle),
   new Command('draw_square', 1, drawSquare),
   new Command('draw_rectangle', 2, drawRectangle),
+
+  new Command('prnt_scrn', 0, makeScreenshot),
 ];

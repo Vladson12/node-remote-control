@@ -30,8 +30,15 @@ export const handleMessage = async (message: RawData) => {
 
     let res = commandName;
     if (commandResult) {
-      if (command.name === 'mouse_position') {
-        res += `_x:${commandResult.x},y:${commandResult.y}`;
+      switch (command.name) {
+        case 'mouse_position':
+          res += `_x:${commandResult.x},y:${commandResult.y}`;
+          break;
+        case 'prnt_scrn':
+          res += ` ${commandResult}`;
+          break;
+        default:
+          res += ` ${commandResult}`;
       }
     }
 
