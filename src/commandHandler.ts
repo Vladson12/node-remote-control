@@ -23,7 +23,7 @@ export const handleMessage = async (message: RawData) => {
     console.log(
       `Command ${command.name}${
         numCommandArgs.length === 0 ? '' : ` ${numCommandArgs.join(' ')}`
-      } executes`,
+      } executing...`,
     );
 
     const commandResult = await command.handler(...numCommandArgs);

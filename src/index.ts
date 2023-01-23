@@ -1,4 +1,4 @@
-import { WebSocketServer } from 'ws';
+import { WebSocketServer, createWebSocketStream } from 'ws';
 import dotenv from 'dotenv';
 import { handleMessage } from './commandHandler';
 
@@ -21,13 +21,17 @@ webSocketServer.on('connection', (ws, req) => {
     `Connection opened by client on ${clientIPAddress}:${clientPort}`,
   );
 
-  ws.on('message', async (data) => {
-    console.log('received: %s', data);
+  const wsStream = createWebSocketStream(ws, {
+    decodeStrings: false,
+  });
+
+  wsStream.on('data', async (data) => {
     try {
+      console.log('received: %s', data);
       const result = await handleMessage(data);
-      ws.send(result);
-    } catch (err) {
-      console.error(err);
+      wsStream.write(result);
+    } catch (err: any) {
+      console.log(err);
     }
   });
 });
