@@ -47,7 +47,7 @@ Now you can start the application:
 
 `npm run start`
 
-To test the application with client application please come [here](https://github.com/rolling-scopes-school/remote-control) and follow instructions.
+To test the application, you need to separately run the client application, please come [here](https://github.com/rolling-scopes-school/remote-control) and follow instructions.
 
 ## Features
 
